@@ -7,3 +7,7 @@ body {
 header h1 {
     text-shadow: 1px 1px 2px white, 0 0 0.2em #54B4D3;
 }
+
+#search_form input, button{
+    width: -webkit-fill-available;
+}
