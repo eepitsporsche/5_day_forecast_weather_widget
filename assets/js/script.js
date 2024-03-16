@@ -2,7 +2,7 @@
 var getCityForecast = function (city) {
 
     //Variable for OpenWeather API link with API key and imperial unit parameter
-    var callOpenWeatherAPI = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=6d920e83bac9f69207691c8489e7e7fc&units=imperial";
+    var callOpenWeatherAPI = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=6d920e83bac9f69207691c8489e7e7fc&units=imperial";
 
     //Fetch method to retrieve city data from OpenWeather API
     fetch(callOpenWeatherAPI)
@@ -10,9 +10,9 @@ var getCityForecast = function (city) {
     //.then function for API response
     .then(function(reponse) {
 
-        if (reponse.ok) {response.json().then(function(data) {forecastDisplay(data);})
+        if (reponse.ok) {response.json().then(function(data) {forecastDisplay(data);});
     
-        } else {alert("Error: " + reponse.statusText)}})
+        } else {alert("Error: " + reponse.statusText)};})
 
     //.catch error and alert for no reponse from OpenWeather server
     .catch(function(error) {alert("Error reaching OpenWeather server.")})
@@ -59,7 +59,7 @@ var printForecast = function (forecastData) {
                 $("#5_day_forecast").empty();
 
                 //Loop to retrieve data every 24 hours from API call
-                for(i=7;i<=data.list.length; i=8) {
+                for(i = 7; i <= data.list.length; i += 8) {
 
                     //5-day forecast display format
                     var fiveDayCard =`
@@ -96,7 +96,7 @@ saveSearchHistory(forecastData.name);
 //Save search history to local storage
 var saveSearchHistory = function(city) {
 
-    //Create search history links for each city searched
+    //Create search history link for the city searched
     if(!citySearchHistory.includes(city)) {
         citySearchHistory.push(city);
         $("#search_history").append("<a href='#' class=list-group-item-action' id='" + city + "'>" + city + "</a>")
@@ -108,21 +108,45 @@ var saveSearchHistory = function(city) {
     //Save the last city searched to local storage
     localStorage.setItem("lastCitySearched", JSON.stringify(lastCitySearched));
 
-    //Print search history from local storage to the page
+    //Retrieve search history from local storage
     printSearchHistory();
 }
 
 //Function to print saved search history data from local storage
-var preventSearchHistory = function() {
+var printSearchHistory = function() {
     citySearchHistory = JSON.parse(localStorage.getItem("forecastSearchHistory"));
     lastCitySearched = JSON.parse(localStorage.getItem("lastCitySearched"));
 
     //Search history string and array ar empty if local storage is empty
     if (!citySearchHistory) {
-        citySearchHistory []
+        citySearchHistory = []
     }
 
     if (!lastCitySearched) {
         lastCitySearched = ""
     }
+
+    //Clear previous search history from ul
+    $("#search_history").empty();
+
+    //Loop through cities in search history array
+    for(i=0;i<citySearchHistory.length;i++) {
+
+        //Create a link for each city in the search history array
+        $("#search_history").append("<a href='#' class='list-group-item-action' id='" + citySearchHistory[i] + "'>" + citySearchHistory[i] + "</a>");
+    }
+};
+
+//Print search history from local storage to the page
+printSearchHistory();
+
+//Print API data to page for last city searched if there is a city in search history
+if (lastCitySearched !="") {
+    getCityForecast(lastCitySearched);
 }
+
+$("#search_form").submit(citySearch);
+$("#search_history").on("click", function(event) {
+    var lastCity = $(event.target).closest("a").attr("id");
+    getCityForecast(lastCity);
+});

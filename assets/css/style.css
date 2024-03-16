@@ -2,6 +2,7 @@ body {
     background-image: linear-gradient(to right top, #168ebc, #2997c2, #39a1c8, #47aacd, #54b4d3);
     background-repeat: no-repeat;
     background-size: 100%;
+    min-height: 1000px;
 }
 
 header h1 {
