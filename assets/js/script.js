@@ -1,4 +1,4 @@
-//Open weather API call
+//OpenWeather API call
 var getCityForecast = function (city) {
     var callOpenWeatherAPI = "api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=6d920e83bac9f69207691c8489e7e7fc";
 
@@ -15,4 +15,22 @@ var getCityForecast = function (city) {
 
     //.catch error and alert for no reponse from OpenWeather server
     .catch(function(error) {alert("Error reaching OpenWeather server.")})
-}
+};
+
+//Retrieve data for city entered in search field
+var citySearch = function(event) {
+
+    event.preventDefault();
+
+    //Take search form input and pass it to the getCityForecast function
+    var cityInput = $("#city_searched").val().trim();
+
+    if(cityInput) {
+        getCityForecast(cityInput);
+
+        $("#city_searched").val("");
+
+    } else {
+        alert("Please enter a valid city.");
+    }
+};
