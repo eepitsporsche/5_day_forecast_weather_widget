@@ -80,4 +80,49 @@ var printForecast = function (forecastData) {
         });
 
 
+//Local storage save operations:
+
+var lastCitySearched = ""
+var citySearchHistory = []
+
+//Redeclare lastCitySearched var with API data of the last city searched
+lastCitySearched = forecastData.name
+
+//Use API city data to save search history
+saveSearchHistory(forecastData.name);
+
+};
+
+//Save search history to local storage
+var saveSearchHistory = function(city) {
+
+    //Create search history links for each city searched
+    if(!citySearchHistory.includes(city)) {
+        citySearchHistory.push(city);
+        $("#search_history").append("<a href='#' class=list-group-item-action' id='" + city + "'>" + city + "</a>")
     }
+
+    //Save search history as an array in local storage
+    localStorage.setItem("forecastSearchHistory", JSON.stringify(citySearchHistory));
+
+    //Save the last city searched to local storage
+    localStorage.setItem("lastCitySearched", JSON.stringify(lastCitySearched));
+
+    //Print search history from local storage to the page
+    printSearchHistory();
+}
+
+//Function to print saved search history data from local storage
+var preventSearchHistory = function() {
+    citySearchHistory = JSON.parse(localStorage.getItem("forecastSearchHistory"));
+    lastCitySearched = JSON.parse(localStorage.getItem("lastCitySearched"));
+
+    //Search history string and array ar empty if local storage is empty
+    if (!citySearchHistory) {
+        citySearchHistory []
+    }
+
+    if (!lastCitySearched) {
+        lastCitySearched = ""
+    }
+}
