@@ -46,7 +46,7 @@ var forecastDisplay = function (forecastData) {
 
         //Pull city info and weather image from OpenWeather and acquire date from DayJS
         $("#current_city").text(forecastData.name + " (" + dayjs(forecastData.dt * 1000).format("MM-D-YYYY") + ") ").append(`<img src="https://openweathermap.org/img/wn/${forecastData.weather[0].icon}@2x.png" />`);
-        $("#current_city_temp").text("temperature: " + forecastData.main.temp.toFixed(1) + "°F");
+        $("#current_city_temp").text("Temperature: " + forecastData.main.temp.toFixed(1) + "°F");
         $("#current_city_wind").text("Wind: " + forecastData.wind.speed.toFixed(1) + " mph");
         $("#current_city_humid").text("Humidity: " + forecastData.main.humidity + "%");
 
@@ -65,9 +65,9 @@ var forecastDisplay = function (forecastData) {
 
                     //5-day forecast display format
                     var fiveDayCard =`
-                    <div class="col-md-2 card text-secondary bg-light">
+                    <div class="col-md-2 card text-light fw-light bg-secondary">
                         <div class="card-body p-1">
-                            <h4 class="card-title">` + dayjs(data.list[i].dt * 1000).format("MM-D-YYYY") + `</h4>
+                            <h3 class="card-title fs-5">` + dayjs(data.list[i].dt * 1000).format("MM-D-YYYY") + `</h3>
                             <img src="https://openweathermap.org/img/wn/` + data.list[i].weather[0].icon + `.png" />
                             <p class="card-text">Temp: ` + data.list[i].main.temp + "°F" + `</p>
                             <p class="card-text">Humidity: ` + data.list[i].main.humidity + "%" + `</p>
@@ -101,7 +101,7 @@ var saveSearchHistory = function(city) {
     //Create search history link for the city searched
     if(!citySearchHistory.includes(city)) {
         citySearchHistory.push(city);
-        $("#search_history").append("<a href='#' class=list-group-item-action' id='" + city + "'>" + city + "</a>")
+        $("#search_history").append("<a href='#' class='list-group-item list-group-item-action' id='" + city + "'>" + city + "</a>")
     }
 
     //Save search history as an array in local storage
@@ -135,7 +135,7 @@ var printSearchHistory = function() {
     for(i=0;i<citySearchHistory.length;i++) {
 
         //Create a link for each city in the search history array
-        $("#search_history").append("<a href='#' class='list-group-item-action' id='" + citySearchHistory[i] + "'>" + citySearchHistory[i] + "</a>");
+        $("#search_history").append("<a href='#' class='list-group-item list-group-item-action' id='" + citySearchHistory[i] + "'>" + citySearchHistory[i] + "</a>");
     }
 };
 

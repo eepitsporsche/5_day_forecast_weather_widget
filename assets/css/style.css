@@ -5,6 +5,10 @@ body {
     min-height: 1000px;
 }
 
+h3 {
+    font-weight: 300;
+}
+
 header h1 {
     text-shadow: 1px 1px 2px white, 0 0 0.2em #54B4D3;
 }
