@@ -4,7 +4,6 @@ var getCityForecast = function(city) {
     //Variable for OpenWeather API link with API key and imperial unit parameter
     var callOpenWeatherAPI = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=6d920e83bac9f69207691c8489e7e7fc&units=imperial";
 
-
     //Fetch method to retrieve city data from OpenWeather API
     fetch(callOpenWeatherAPI)
     
@@ -70,6 +69,7 @@ var forecastDisplay = function (forecastData) {
                             <h3 class="card-title fs-5">` + dayjs(data.list[i].dt * 1000).format("MM-D-YYYY") + `</h3>
                             <img src="https://openweathermap.org/img/wn/` + data.list[i].weather[0].icon + `.png" />
                             <p class="card-text">Temp: ` + data.list[i].main.temp + "°F" + `</p>
+                            <p class="card-text">Wind: ` + data.list[i].wind.speed + " mph" + `</p>
                             <p class="card-text">Humidity: ` + data.list[i].main.humidity + "%" + `</p>
                         </div>
                     </div>
@@ -119,7 +119,7 @@ var printSearchHistory = function() {
     citySearchHistory = JSON.parse(localStorage.getItem("forecastSearchHistory"));
     lastCitySearched = JSON.parse(localStorage.getItem("lastCitySearched"));
 
-    //Search history string and array ar empty if local storage is empty
+    //Search history string and array are empty if local storage is empty
     if (!citySearchHistory) {
         citySearchHistory = []
     }
