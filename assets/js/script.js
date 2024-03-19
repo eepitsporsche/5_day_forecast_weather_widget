@@ -59,7 +59,7 @@ var forecastDisplay = function (forecastData) {
                 //Clear any existing data from the #5_day_forecast element
                 $("#5_day_forecast").empty();
 
-                //Loop to retrieve data every 24 hours from API call
+                //Loop to retrieve data for every 24 hours from API call
                 for(i = 7; i <= data.list.length; i += 8) {
 
                     //5-day forecast display format
